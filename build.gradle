@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.cleanroommc.com/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = '1.0.0-standalone'
+group = 'com.shadowdickinson.littleframes'
+archivesBaseName = 'LittleFrames-Standalone'
+
+sourceCompatibility = targetCompatibility = '1.8'
+
+minecraft {
+    // Forge 14.23.5.2860 is the runtime target, but it does not publish a ForgeGradle 2.x userdev artifact.
+    // 14.23.5.2847 is the closest broadly published 1.12.2 userdev and remains runtime-compatible with 2860.
+    version = '1.12.2-14.23.5.2847'
+    runDir = 'run'
+    mappings = 'snapshot_20171003'
+}
+
+repositories {
+    maven { url = 'https://cursemaven.com' }
+    mavenCentral()
+}
+
+configurations {
+    embedded
+    compileOnly.extendsFrom embedded
+}
+
+dependencies {
+    compileOnly 'curse.maven:creativecore-257814:3626833'
+    embedded 'uk.co.caprica:vlcj:4.2.0'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', '1.12.2'
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': '1.12.2'
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+jar {
+    from {
+        configurations.embedded.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+    
+    manifest {
+        attributes([
+            'Specification-Title': 'LittleFrames Standalone',
+            'Specification-Vendor': 'CreativeMD, Shadow-Dickinson',
+            'Specification-Version': '1',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Implementation-Vendor': 'Shadow-Dickinson'
+        ])
+    }
+}

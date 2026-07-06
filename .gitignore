@@ -1,12 +1,27 @@
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Gradle
+.gradle/
+build/
+out/
 
-# Package Files #
+# Forge/Minecraft run directories
+run/
+eclipse/
+.idea/
+*.iml
+
+# Local dependency/cache folders
+libs/
+.gradle-local/
+
+# Package files
 *.jar
 *.war
 *.ear
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Logs and crash reports
+*.log
+crash-reports/
 hs_err_pid*
+replay_pid*

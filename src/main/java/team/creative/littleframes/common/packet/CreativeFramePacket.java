@@ -6,6 +6,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import team.creative.littleframes.common.block.TileEntityCreativeFrame;
 
 public class CreativeFramePacket extends CreativeCorePacket {
@@ -37,16 +39,19 @@ public class CreativeFramePacket extends CreativeCorePacket {
     }
     
     @Override
+    @SideOnly(Side.CLIENT)
     public void executeClient(EntityPlayer player) {
         TileEntity te = player.world.getTileEntity(pos);
         if (te instanceof TileEntityCreativeFrame) {
             TileEntityCreativeFrame frame = (TileEntityCreativeFrame) te;
             frame.playing = playing;
             frame.tick = tick;
-            if (playing)
-                frame.display.resume(frame.getURL(), frame.volume, frame.playing, frame.loop, frame.tick);
-            else
-                frame.display.pause(frame.getURL(), frame.volume, frame.playing, frame.loop, frame.tick);
+            if (frame.display != null) {
+                if (playing)
+                    frame.display.resume(frame.getURL(), frame.volume, frame.playing, frame.loop, frame.tick);
+                else
+                    frame.display.pause(frame.getURL(), frame.volume, frame.playing, frame.loop, frame.tick);
+            }
         }
     }
     

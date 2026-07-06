@@ -1,14 +1,14 @@
 [
 {
   "modid": "littleframes",
-  "name": "LittleFrames",
-  "description": "",
+  "name": "LittleFrames Standalone",
+  "description": "Unofficial standalone fork of LittleFrames for Minecraft Forge 1.12.2. Keeps the normal creative_frame block without the original structure integration.",
   "mcversion": "${mcversion}",
-  "version": "1.0.0",
-  "url": "",
+  "version": "${version}",
+  "url": "https://github.com/Shadow-Dickinson/LittleFrames-Standalone",
   "updateUrl": "",
-  "authorList": ["CreativeMD"],
-  "credits": "",
+  "authorList": ["CreativeMD", "Shadow-Dickinson"],
+  "credits": "Original LittleFrames mod by CreativeMD. Standalone fork modifications by Shadow-Dickinson.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": ["creativecore"]
